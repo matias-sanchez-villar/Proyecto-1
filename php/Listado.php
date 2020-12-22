@@ -66,9 +66,9 @@
         //con array indexado
         while($fila= mysqli_fetch_row ($resultados)){ ///lee el archivo
             if($fila[5]){
-                $fila[5]="Verdadero";
+                $fila[5]="Si";
             }else{
-                $fila[5]="Falso";
+                $fila[5]="No";
             }
             echo("
                 <tbody>
