@@ -48,7 +48,7 @@
 
     <?php
         if(isset($_POST['Buscar'])){
-            $Nombre=$_POST['Buscar'];
+            ucfirst ($Nombre=$_POST['Buscar']);
             $conexion= mysqli_connect ("localhost", "root", "");
             if(mysqli_connect_errno()){ ///verificamos la coneccion
                 echo "salio mal";
