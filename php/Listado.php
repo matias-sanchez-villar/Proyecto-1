@@ -83,9 +83,9 @@
                         <td>$fila[7]</td>
                     </tr>
                 </tbody>
-            </table>
             ");
         }
+        echo "</table>";
 
     mysqli_close($conexion);//cerramos la conexion
 
