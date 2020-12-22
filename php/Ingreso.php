@@ -7,10 +7,10 @@
     $Fecha=$_POST["Fecha"];
     $Estado=true;
 
-
-    if($PaisOrigen=="Argentina"){
+    if(!strcasecmp($_POST["PaisOrigen"], "Argentina")){
         $Estado=false;
     }
+    
     $conexion= mysqli_connect ("localhost", "root", "");
     if(mysqli_connect_errno()){ ///verificamos la coneccion
         echo "salio mal";
@@ -25,7 +25,12 @@
 
     $resultados= mysqli_query ($conexion, $consulta);
     
-        
+    if($resultados){
+        echo ("Mensaje Enviado");
+    }else{
+        echo ("Error Mensaje no Enviado");
+    }
+    echo ("<a href='../html/index.html'>Ingreso</a>");
     mysqli_close($conexion);//cerramos la conexion
     
 ?>
