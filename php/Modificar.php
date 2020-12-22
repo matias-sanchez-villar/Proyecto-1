@@ -51,6 +51,10 @@
                     <label>Precio:</label>
                     <input type="text" name="Precio" class="form-control">
                 </div>
+                <div class="form-group">
+                    <label>Pais de Origen:</label>
+                    <input type="text" name="Pais" class="form-control">
+                </div>
                 <button type="submit" name="Enviar" value="Enviar" class="btn btn-primary">Modificar</button>
             </form>
         </div>
@@ -60,6 +64,13 @@
         if(isset($_POST['Codigo'])){
             $Codigo=$_POST['Codigo'];
             $Precio=$_POST['Precio'];
+            $Pais=ucfirst ($Pais=$_POST['Pais']);
+            $Estado=true;
+
+            if(!strcasecmp($_POST["PaisOrigen"], "Argentina")){
+                $Estado=false;
+            }
+            
             $conexion= mysqli_connect ("localhost", "root", "");
             if(mysqli_connect_errno()){ ///verificamos la coneccion
                 echo "salio mal";
@@ -69,7 +80,7 @@
             mysqli_set_charset($conexion, "utf8"); /// ponemos los caracteres en español
 
 
-            $consulta="UPDATE `productos` SET Precio='$Precio' WHERE Codigo='$Codigo'";
+            $consulta="UPDATE `productos` SET Precio='$Precio', PaisOrigen='$Pais', Importado='$Estado' WHERE Codigo='$Codigo'";
 
             $resultados= mysqli_query ($conexion, $consulta);
 

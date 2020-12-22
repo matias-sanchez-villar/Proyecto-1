@@ -1,9 +1,9 @@
 <?php
 
-    ucfirst ($Seccion=$_POST["Seccion"]);
-    ucfirst ($Nombre=$_POST["Nombre"]);
+    $Seccion=ucfirst ($Seccion=$_POST["Seccion"]);
+    $Nombre=ucfirst ($Nombre=$_POST["Nombre"]);
     $Precio=$_POST["Precio"];
-    ucfirst ($PaisOrigen=$_POST["PaisOrigen"]);
+    $PaisOrigen= ucfirst ($PaisOrigen=$_POST["PaisOrigen"]);
     $Fecha=$_POST["Fecha"];
     $Estado=true;
 
