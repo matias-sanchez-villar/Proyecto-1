@@ -39,10 +39,10 @@
 
     <div class="container-fluid">
         <div class="container py-5">
-            <form name="inicio" action="Busqueda.php" method="post">
+            <form name="inicio" action="Eliminar.php" method="post">
                 <div class="form-group">
                     <label>Codigo del Producto a eliminar:</label>
-                    <input type="text" name="Buscar" class="form-control">
+                    <input type="text" name="Eliminar" class="form-control">
                 </div>
                 <button type="submit" name="Enviar" value="Enviar" class="btn btn-primary">Eliminar</button>
             </form>
@@ -50,8 +50,8 @@
     </div>
 
     <?php
-        if(isset($_POST['Buscar'])){
-            ucfirst ($Nombre=$_POST['Buscar']);
+        if(isset($_POST['Eliminar'])){
+            $Eliminar=$_POST['Eliminar'];
             $conexion= mysqli_connect ("localhost", "root", "");
             if(mysqli_connect_errno()){ ///verificamos la coneccion
                 echo "salio mal";
@@ -61,48 +61,16 @@
             mysqli_set_charset($conexion, "utf8"); /// ponemos los caracteres en español
 
 
-            $consulta="SELECT * FROM `productos` WHERE Nombre LIKE '%$Nombre%'";
+            $consulta="DELETE FROM `productos` WHERE Codigo='$Eliminar'";
 
             $resultados= mysqli_query ($conexion, $consulta);
 
-            echo("
-            <table class='table'>
-                <thead>
-                    <tr>
-                        <th scope='col'>Codigo</th>
-                        <th scope='col'>Seccion</th>
-                        <th scope='col'>Nombre</th>
-                        <th scope='col'>Precio</th>
-                        <th scope='col'>Fecha</th>
-                        <th scope='col'>Impotado</th>
-                        <th scope='col'>Pais de Origen</th>
-                        <th scope='col'>Foto</th>
-                    </tr>
-                </thead>");
-                
-            //con array indexado
-            while($fila= mysqli_fetch_row ($resultados)){ ///lee el archivo
-                if($fila[5]){
-                    $fila[5]="Si";
-                }else{
-                    $fila[5]="No";
-                }
-                echo("
-                    <tbody>
-                        <tr>
-                            <th scope='row'>$fila[0]</th>
-                            <td>$fila[1]</td>
-                            <td>$fila[2]</td>
-                            <td>$fila[3]</td>
-                            <td>$fila[4]</td>
-                            <td>$fila[5]</td>
-                            <td>$fila[6]</td>
-                            <td>$fila[7]</td>
-                        </tr>
-                    </tbody>
-                ");
+            if($resultados){
+                echo "Producto eliminado";   
             }
-            echo "</table>";
+            else{
+                echo "Producto no eliminado";
+            }
 
             mysqli_close($conexion);//cerramos la conexion
             
