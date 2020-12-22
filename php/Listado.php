@@ -31,6 +31,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Busqueda.php">Busqueda</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Eliminar.php">Eliminar</a>
+                </li>
             </ul>
         </div>
     </div>

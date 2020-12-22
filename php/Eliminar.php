@@ -28,10 +28,10 @@
                     <a class="nav-link" href="../html/index.html">Ingreso</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="Busqueda.php">Busqueda</a>
+                    <a class="nav-link" href="Busqueda.php">Busqueda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Eliminar.php">Eliminar</a>
+                    <a class="nav-link active" href="Eliminar.php">Eliminar</a>
                 </li>
             </ul>
         </div>
@@ -41,10 +41,10 @@
         <div class="container py-5">
             <form name="inicio" action="Busqueda.php" method="post">
                 <div class="form-group">
-                    <label>Buscar:</label>
+                    <label>Codigo del Producto a eliminar:</label>
                     <input type="text" name="Buscar" class="form-control">
                 </div>
-                <button type="submit" name="Enviar" value="Enviar" class="btn btn-primary">Buscar</button>
+                <button type="submit" name="Enviar" value="Enviar" class="btn btn-primary">Eliminar</button>
             </form>
         </div>
     </div>
