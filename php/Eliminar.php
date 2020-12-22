@@ -65,11 +65,15 @@
 
             $resultados= mysqli_query ($conexion, $consulta);
 
-            if($resultados){
+            if($resultados && mysqli_affected_rows($conexion)==1){
                 echo "Producto eliminado";   
             }
             else{
-                echo "Producto no eliminado";
+                if(mysqli_affected_rows($conexion)==0){///funcion de actividades en la base de datos-- en este caso 0 delete(eliminaciones)
+                    echo "Producto no existente";
+                }else{
+                    echo "Error Producto no eliminado";
+                }
             }
 
             mysqli_close($conexion);//cerramos la conexion
