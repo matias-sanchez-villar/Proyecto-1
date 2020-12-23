@@ -1,5 +1,8 @@
 <?php
 
+require("conexion.php");/// requerida para usar $conexion
+
+    /// traemos todos los campos
     $Seccion=ucfirst ($Seccion=$_POST["Seccion"]);
     $Nombre=ucfirst ($Nombre=$_POST["Nombre"]);
     $Precio=$_POST["Precio"];
@@ -9,22 +12,14 @@
 
     if(!strcasecmp($_POST["PaisOrigen"], "Argentina")){
         $Estado=false;
-    }
+    }    
     
-    $conexion= mysqli_connect ("localhost", "root", "");
-    if(mysqli_connect_errno()){ ///verificamos la coneccion
-        echo "salio mal";
-        exit();
-    }
-    mysqli_select_db($conexion, "tp9") or die ("no se encuentra la base de datos");///verificamos la base de datos
-    mysqli_set_charset($conexion, "utf8"); /// ponemos los caracteres en español
-
-    
-
+    ///base de datos
     $consulta="INSERT INTO `productos`(`Seccion`, `Nombre`, `Precio`, `Fecha`, `Importado`, `PaisOrigen`) VALUES ('$Seccion','$Nombre','$Precio','$Fecha','$Estado','$PaisOrigen')"; 
 
     $resultados= mysqli_query ($conexion, $consulta);
     
+    ///verificamos
     if($resultados){
         echo ("Mensaje Enviado  ");
     }else{

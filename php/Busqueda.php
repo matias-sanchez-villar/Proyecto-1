@@ -54,13 +54,7 @@
 
     <?php
         if(isset($_POST['Buscar'])){
-            $conexion= mysqli_connect ("localhost", "root", "");
-            if(mysqli_connect_errno()){ ///verificamos la coneccion
-                echo "salio mal";
-                exit();
-            }
-            mysqli_select_db($conexion, "tp9") or die ("no se encuentra la base de datos");///verificamos la base de datos
-            mysqli_set_charset($conexion, "utf8"); /// ponemos los caracteres en español
+            require("conexion.php");
 
             $Nombre= mysqli_real_escape_string($conexion, $_POST['Buscar']);/// mysqli_real_escape_string-- sirve para la inyeccion sql
 
