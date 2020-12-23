@@ -54,7 +54,6 @@
 
     <?php
         if(isset($_POST['Eliminar'])){
-            $Eliminar=$_POST['Eliminar'];
             $conexion= mysqli_connect ("localhost", "root", "");
             if(mysqli_connect_errno()){ ///verificamos la coneccion
                 echo "salio mal";
@@ -63,7 +62,8 @@
             mysqli_select_db($conexion, "tp9") or die ("no se encuentra la base de datos");///verificamos la base de datos
             mysqli_set_charset($conexion, "utf8"); /// ponemos los caracteres en español
 
-
+            $Eliminar=mysqli_real_escape_string($conexion, $_POST['Eliminar']);
+            
             $consulta="DELETE FROM `productos` WHERE Codigo='$Eliminar'";
 
             $resultados= mysqli_query ($conexion, $consulta);

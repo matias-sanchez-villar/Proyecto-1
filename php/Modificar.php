@@ -62,16 +62,8 @@
 
     <?php
         if(isset($_POST['Codigo'])){
-            $Codigo=$_POST['Codigo'];
-            $Precio=$_POST['Precio'];
-            $Pais=ucfirst ($Pais=$_POST['Pais']);
-            $Estado=true;
-
-            if(!strcasecmp($_POST["PaisOrigen"], "Argentina")){
-                $Estado=false;
-            }
-            
             $conexion= mysqli_connect ("localhost", "root", "");
+        
             if(mysqli_connect_errno()){ ///verificamos la coneccion
                 echo "salio mal";
                 exit();
@@ -79,6 +71,14 @@
             mysqli_select_db($conexion, "tp9") or die ("no se encuentra la base de datos");///verificamos la base de datos
             mysqli_set_charset($conexion, "utf8"); /// ponemos los caracteres en español
 
+            $Codigo=mysqli_real_escape_string($conexion, $_POST['Codigo']);
+            $Precio=mysqli_real_escape_string($conexion, $_POST['Precio']);
+            $Pais=mysqli_real_escape_string($conexion, $_POST['Pais']);
+            $Estado=true;
+
+            if(!strcasecmp($Pais, "Argentina")){
+                $Estado=false;
+            }
 
             $consulta="UPDATE `productos` SET Precio='$Precio', PaisOrigen='$Pais', Importado='$Estado' WHERE Codigo='$Codigo'";
 
