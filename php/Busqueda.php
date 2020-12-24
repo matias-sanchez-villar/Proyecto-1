@@ -55,12 +55,19 @@
     <?php
         if(isset($_POST['Buscar'])){
             require("conexion.php");
-
-            $Nombre= mysqli_real_escape_string($conexion, $_POST['Buscar']);/// mysqli_real_escape_string-- sirve para la inyeccion sql
-
-            $consulta="SELECT * FROM `productos` WHERE Nombre LIKE '%$Nombre%'";
-
-            $resultados= mysqli_query ($conexion, $consulta);
+            $Buscar=$_POST['Buscar'];
+            
+            $sql="SELECT * FROM productos WHERE Nombre LIKE ?";
+            $prepare=mysqli_prepare($conexion, $sql);
+            if(mysqli_stmt_bind_param($prepare, "i", $Buscar)==false){
+                echo "error de datos";
+            }
+            if(mysqli_stmt_execute($prepare)==false){
+                echo "Error de consulta";
+            }
+            if(mysqli_stmt_bind_result($prepare, $Codigo, $Seccion, $Nombre, $Precio, $Fecha, $Importado, $PaisOrigen, $Foto)==false){
+                echo "error de resultados";
+            }
 
             echo("
             <table class='table'>
@@ -78,7 +85,7 @@
                 </thead>");
                 
             //con array indexado
-            while($fila= mysqli_fetch_row ($resultados)){ ///lee el archivo
+            while(mysqli_stmt_fetch ($prepare)){ ///lee el archivo
                 if($fila[5]){
                     $fila[5]="Si";
                 }else{
@@ -87,14 +94,14 @@
                 echo("
                     <tbody>
                         <tr>
-                            <th scope='row'>$fila[0]</th>
-                            <td>$fila[1]</td>
-                            <td>$fila[2]</td>
-                            <td>$fila[3]</td>
-                            <td>$fila[4]</td>
-                            <td>$fila[5]</td>
-                            <td>$fila[6]</td>
-                            <td>$fila[7]</td>
+                            <th scope='row'>$Codigo</th>
+                            <td>$Seccion</td>
+                            <td>$Nombre</td>
+                            <td>$Precio</td>
+                            <td>$Fecha</td>
+                            <td>$Importado</td>
+                            <td>$PaisOrigen</td>
+                            <td>$Foto</td>
                         </tr>
                     </tbody>
                 ");

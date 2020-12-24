@@ -88,7 +88,7 @@
                 }
             }
 
-            mysqli_close($conexion);//cerramos la conexion
+            mysqli_stmt_close($prepare);//cerramos la conexion
             
         }
 

@@ -42,55 +42,71 @@
     </div>
 
     <?php
-        require("conexion.php");
+    ///con un objeto
+    
+    $Objeto= new mysqli ("localhost", "root", "", "tp9");
+    ///verificmamos todo
+    if ($Objeto->connect_errno) {
+        die('Connect Error: ' . $Objeto->connect_errno);
+    }
+    ///ponemos caracteres en español
+    $Objeto->set_charset("utf-8");
 
-        $consulta="SELECT * FROM `productos`"; /// si agrego -- WHERE Edad='0' -- puedo filtrar la informacion d ela base de datos
+    $Consulta="SELECT * FROM `productos`";
 
-        $resultados= mysqli_query ($conexion, $consulta);
+    $Resultado= $Objeto->query($Consulta);
 
-        echo("
-        <table class='table'>
-            <thead>
-                <tr>
-                    <th scope='col'>Codigo</th>
-                    <th scope='col'>Seccion</th>
-                    <th scope='col'>Nombre</th>
-                    <th scope='col'>Precio</th>
-                    <th scope='col'>Fecha</th>
-                    <th scope='col'>Impotado</th>
-                    <th scope='col'>Pais de Origen</th>
-                    <th scope='col'>Foto</th>
-                </tr>
-            </thead>");
-            
-        //con array indexado
-        while($fila= mysqli_fetch_row ($resultados)){ ///lee el archivo
-            if($fila[5]){
-                $fila[5]="Si";
-            }else{
-                $fila[5]="No";
-            }
-            echo("
-                <tbody>
-                    <tr>
-                        <th scope='row'>$fila[0]</th>
-                        <td>$fila[1]</td>
-                        <td>$fila[2]</td>
-                        <td>$fila[3]</td>
-                        <td>$fila[4]</td>
-                        <td>$fila[5]</td>
-                        <td>$fila[6]</td>
-                        <td>$fila[7]</td>
-                    </tr>
-                </tbody>
-            ");
+    if($Objeto->errno){
+        die($Objeto->error);
+    }
+
+
+    echo("
+    <table class='table'>
+        <thead>
+            <tr>
+                <th scope='col'>Codigo</th>
+                <th scope='col'>Seccion</th>
+                <th scope='col'>Nombre</th>
+                <th scope='col'>Precio</th>
+                <th scope='col'>Fecha</th>
+                <th scope='col'>Impotado</th>
+                <th scope='col'>Pais de Origen</th>
+                <th scope='col'>Foto</th>
+            </tr>
+        </thead>");
+
+
+
+
+    
+    while($fila=$Resultado->fetch_array()){
+        if($fila[5]){
+            $fila[5]="Si";
+        }else{
+            $fila[5]="No";
         }
-        echo "</table>";
-
-    mysqli_close($conexion);//cerramos la conexion
+        echo("
+            <tbody>
+                <tr>
+                    <th scope='row'>$fila[0]</th>
+                    <td>$fila[1]</td>
+                    <td>$fila[2]</td>
+                    <td>$fila[3]</td>
+                    <td>$fila[4]</td>
+                    <td>$fila[5]</td>
+                    <td>$fila[6]</td>
+                    <td>$fila[7]</td>
+                </tr>
+            </tbody>
+        ");
+    }
+    echo "</table>";
 
     ?>
 
 </body>
+
+</html>
 
 </html>
