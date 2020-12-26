@@ -59,7 +59,7 @@
             
             $sql="SELECT * FROM productos WHERE Nombre LIKE ?";
             $prepare=mysqli_prepare($conexion, $sql);
-            if(mysqli_stmt_bind_param($prepare, "i", $Buscar)==false){
+            if(mysqli_stmt_bind_param($prepare, "s", $Buscar)==false){
                 echo "error de datos";
             }
             if(mysqli_stmt_execute($prepare)==false){
@@ -86,10 +86,10 @@
                 
             //con array indexado
             while(mysqli_stmt_fetch ($prepare)){ ///lee el archivo
-                if($fila[5]){
-                    $fila[5]="Si";
+                if($Importado){
+                    $Importado="Si";
                 }else{
-                    $fila[5]="No";
+                    $Importado="No";
                 }
                 echo("
                     <tbody>
