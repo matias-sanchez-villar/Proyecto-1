@@ -44,16 +44,34 @@
         <div class="container py-5">
             <form name="inicio" action="Modificar.php" method="post">
                 <div class="form-group">
-                    <label>Codigo del Producto a Modificar:</label>
+                    <label>Codigo:</label>
                     <input type="text" name="Codigo" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Seccion:</label>
+                    <input type="text" name="Seccion" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" name="Nombre" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Precio:</label>
                     <input type="text" name="Precio" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Pais de Origen:</label>
-                    <input type="text" name="Pais" class="form-control">
+                    <label>Pais de Orgien:</label>
+                    <input type="text" name="PaisOrigen" class="form-control">
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Fecha</label>
+                    <div class="col-10">
+                        <input class="form-control" type="date" name="Fecha">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Foto del Producto</label>
+                    <input type="file" name="Imagen" class="form-control-file">
                 </div>
                 <button type="submit" name="Enviar" value="Enviar" class="btn btn-primary">Modificar</button>
             </form>
@@ -61,34 +79,37 @@
     </div>
 
     <?php
-        if(isset($_POST['Codigo'])){
-            require("conexion.php");
-
-            $Codigo=mysqli_real_escape_string($conexion, $_POST['Codigo']);
-            $Precio=mysqli_real_escape_string($conexion, $_POST['Precio']);
-            $Pais=mysqli_real_escape_string($conexion, $_POST['Pais']);
+        if(isset($_POST['Enviar'])){
+            
+            require("conexion.php");/// requerida para usar $conexion
+            /// traemos todos los campos
+            $Codigo=$_POST['Codigo'];
+            $Seccion=$_POST["Seccion"];
+            $Nombre=$_POST["Nombre"];
+            $Precio=$_POST["Precio"];
+            $Fecha=$_POST["Fecha"];
+            $PaisOrigen= $_POST["PaisOrigen"];
             $Estado=true;
-
-            if(!strcasecmp($Pais, "Argentina")){
+    
+            if(!strcasecmp($_POST["PaisOrigen"], "Argentina")){
                 $Estado=false;
+            }    
+            
+            ///base de datos
+                    
+            $sql="UPDATE `productos` SET `Seccion`=?,`Nombre`=?,`Precio`=?,`Fecha`=?,`Importado`=?,`PaisOrigen`=? WHERE `Codigo`=?";
+    
+            $Prepare=mysqli_prepare($conexion, $sql);
+    
+            mysqli_stmt_bind_param($Prepare,"sssssss", $Seccion, $Nombre, $Precio, $Fecha, $Estado, $PaisOrigen, $Codigo);
+            
+            if(mysqli_stmt_execute($Prepare)){
+                echo "Enviado";
+            }else{
+                echo "no enviado";
             }
-
-            $consulta="UPDATE `productos` SET Precio='$Precio', PaisOrigen='$Pais', Importado='$Estado' WHERE Codigo='$Codigo'";
-
-            $resultados= mysqli_query ($conexion, $consulta);
-
-            if($resultados && mysqli_affected_rows($conexion)==1){
-                echo "Producto Modificado";   
-            }
-            else{
-                if(mysqli_affected_rows($conexion)==0){///funcion de actividades en la base de datos-- en este caso 0 delete(eliminaciones)
-                    echo "Producto no existente";
-                }else{
-                    echo "Error Producto no Modificado";
-                }
-            }
-
-            mysqli_stmt_close($prepare);//cerramos la conexion
+            echo "  <a href='../html/index.html'>Ingreso</a>";
+            mysqli_stmt_close($Prepare);//cerramos la conexion
             
         }
 

@@ -53,27 +53,26 @@
     </div>
 
     <?php
-        if(isset($_POST['Eliminar'])){
-            require("conexion.php");
+        if(isset($_POST['Enviar'])){
+            require("conexion.php");/// requerida para usar $conexion
+            /// traemos todos los campos
+            $Codigo=$_POST['Eliminar'];
+    
+            ///base de datos
 
-            $Eliminar=mysqli_real_escape_string($conexion, $_POST['Eliminar']);
+            $sql="DELETE FROM `productos` WHERE `Codigo`=?";
+    
+            $Prepare=mysqli_prepare($conexion, $sql);
+    
+            mysqli_stmt_bind_param($Prepare,"s", $Codigo);
             
-            $consulta="DELETE FROM `productos` WHERE Codigo='$Eliminar'";
-
-            $resultados= mysqli_query ($conexion, $consulta);
-
-            if($resultados && mysqli_affected_rows($conexion)==1){
-                echo "Producto eliminado";   
+            if(mysqli_stmt_execute($Prepare)){
+                echo "Enviado";
+            }else{
+                echo "no enviado";
             }
-            else{
-                if(mysqli_affected_rows($conexion)==0){///funcion de actividades en la base de datos-- en este caso 0 delete(eliminaciones)
-                    echo "Producto no existente";
-                }else{
-                    echo "Error Producto no eliminado";
-                }
-            }
-
-            mysqli_close($conexion);//cerramos la conexion
+            echo "  <a href='../html/index.html'>Ingreso</a>";
+            mysqli_stmt_close($Prepare);//cerramos la conexion
             
         }
 
