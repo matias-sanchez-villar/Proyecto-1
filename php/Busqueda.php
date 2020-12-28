@@ -44,7 +44,7 @@
         <div class="container py-5">
             <form name="inicio" action="Busqueda.php" method="post">
                 <div class="form-group">
-                    <label>Buscar:</label>
+                    <label>Nombre producto:</label>
                     <input type="text" name="Buscar" class="form-control">
                 </div>
                 <button type="submit" name="Enviar" value="Enviar" class="btn btn-primary">Buscar</button>
